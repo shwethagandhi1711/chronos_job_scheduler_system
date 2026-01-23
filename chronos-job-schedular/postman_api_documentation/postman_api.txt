@@ -1,0 +1,774 @@
+REGISTER 
+
+ADMIN REGISTER:
+
+POST http://localhost:8080/api/auth/register
+
+{
+  "name": "Admin User",
+  "email": "admin2@chronos.com",
+  "password": "admin124",
+  "role": "ROLE_ADMIN"
+}
+
+User registered successfully
+
+ADMIN ALREADY EXISTS:
+
+POST http://localhost:8080/api/auth/register
+
+{
+  "name": "Admin User",
+  "email": "admin@chronos.com",
+  "password": "admin123",
+  "role": "ROLE_ADMIN"
+}
+
+{
+    "message": "Email already exists"
+}
+
+IF ANY FIELD IS MISSING IN ADMIN REGISTER:
+
+POST http://localhost:8080/api/auth/register
+
+{
+  "name": "Admin User",
+  "email": "admin2@chronos.com",
+  "role": "ROLE_ADMIN"
+}
+
+{
+    "password": "Password is required"
+}
+
+ADMIN LOGIN:
+
+POST http://localhost:8080/api/auth/login
+
+{
+  "email": "admin@chronos.com",
+  "password": "admin123"
+}
+
+{
+    "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBjaHJvbm9zLmNvbSIsInJvbGUiOiJST0xFX0FETUlOIiwiaWF0IjoxNzY4OTA2Mzk0LCJleHAiOjE3Njg5OTI3OTR9.OuycucmH_TunnO9xQVyONx4VeFShLLqyWvmB5L9ryMo"
+}
+
+INVALID CREDENTIALS IN ADMIN LOGIN:
+
+POST http://localhost:8080/api/auth/login
+
+{
+  "email": "admin@chronos.com",
+  "password": "admin12"
+}
+
+{
+    "message": "Invalid email or password"
+}
+
+IF ANY FIELD IS MISSING IN ADMIN LOGIN:
+
+POST http://localhost:8080/api/auth/login
+
+{
+  "password": "admin123"
+}
+
+{
+    "email": "Email is required"
+}
+
+EMPLOYEE REGISTER:
+
+POST http://localhost:8080/api/auth/register
+
+{
+  "name": "Employee User",
+  "email": "employee@chronos.com",
+  "password": "emp123",
+  "role": "ROLE_EMPLOYEE"
+}
+
+User registered successfully
+
+EMPLOYEE ALREADY EXISTS:
+
+POST http://localhost:8080/api/auth/register
+
+{
+  "name": "Employee User",
+  "email": "employee@chronos.com",
+  "password": "emp123",
+  "role": "ROLE_EMPLOYEE"
+}
+
+{
+    "message": "Email already exists"
+}
+
+
+IF ANY FIELD IS MISSING IN EMPLOYEE REGISTER:
+
+POST http://localhost:8080/api/auth/register
+
+{
+  "name": "Employee User1",
+  "password": "emp124",
+  "role": "ROLE_EMPLOYEE"
+}
+
+{
+    "email": "Email is required"
+}
+
+EMPLOYEE LOGIN:
+
+POST http://localhost:8080/api/auth/login
+
+{
+  "email": "employee1@chronos.com",
+  "password": "emp124"
+}
+
+{
+    "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlbXBsb3llZTFAY2hyb25vcy5jb20iLCJyb2xlIjoiUk9MRV9FTVBMT1lFRSIsImlhdCI6MTc2ODkwNTkyMywiZXhwIjoxNzY4OTkyMzIzfQ.gzUkm6OOvtRHi8IVbGdrZyoAXeCvz72PsiQtYue1ROQ"
+}
+
+INVALID CREDENTIALS IN EMPLOYEE LOGIN:
+
+POST http://localhost:8080/api/auth/login
+
+{
+  "email": "employee1@chronos.com",
+  "password": "emp14"
+}
+
+{
+    "message": "Invalid email or password"
+}
+
+IF ANY FIELD IS MISSING IN EMPLOYEE LOGIN:
+
+POST http://localhost:8080/api/auth/login
+
+{
+  "email": "employee1@chronos.com"
+}
+
+{
+    "password": "Password is required"
+}
+
+CREATE JOB AND SCHEDULE JOB:
+
+IMMEDIATE JOB CREATION:
+
+POST http://localhost:8080/api/jobs/create
+
+{
+  "jobName": "Immediate Test Job1",
+  "jobType": "IMMEDIATE",
+  "timeDuration": 10
+}
+
+{
+    "createdAt": "2026-01-20T19:17:04.6916833",
+    "jobId": 4,
+    "jobName": "Immediate Test Job1",
+    "jobType": "IMMEDIATE",
+    "maxRetries": 3,
+    "nextExecutionTime": null,
+    "recurrencePattern": null,
+    "retryCount": 0,
+    "startTime": "2026-01-20T19:17:04.6916833",
+    "status": "PENDING",
+    "timeDuration": 10
+}
+
+IF ANY FIELD IS MISSING IN IMMEDIATE JOB CREATION:
+
+POST http://localhost:8080/api/jobs/create
+
+{
+  "jobName": "Immediate Test Job",
+  "jobType": "IMMEDIATE"
+}
+
+{
+    "message": "Time duration must be greater than 0 for immediate jobs"
+}
+
+ONE TIME JOB:
+
+ONE TIME JOB CREATION:
+
+POST http://localhost:8080/api/jobs/create
+
+{
+  "jobName": "One-Time Test Job1",
+  "jobType": "ONE_TIME",
+  "startTime": "2026-01-20T19:11:00",
+  "timeDuration": 15
+}
+
+{
+    "createdAt": "2026-01-20T19:10:43.4887756",
+    "jobId": 3,
+    "jobName": "One-Time Test Job1",
+    "jobType": "ONE_TIME",
+    "maxRetries": 3,
+    "nextExecutionTime": null,
+    "recurrencePattern": null,
+    "retryCount": 0,
+    "startTime": "2026-01-20T19:11:00",
+    "status": "PENDING",
+    "timeDuration": 15
+}
+
+IF EARLIER START TIME IS GIVEN IN ONE TIME JOB CREATION:
+
+POST http://localhost:8080/api/jobs/create
+
+{
+  "jobName": "One-Time Test Job",
+  "jobType": "ONE_TIME",
+  "startTime": "2026-01-20T16:00:00",
+  "timeDuration": 15
+}
+
+{
+    "error": "Start time must be in the future"
+}
+
+IF ANY FIELD IS MISSING IN ONE TIME JOB CREATION:
+
+POST http://localhost:8080/api/jobs/create
+
+{
+  "jobName": "One-Time Test Job",
+  "jobType": "ONE_TIME",
+  "timeDuration": 15
+}
+
+{
+    "error": "Start time is required for ONE_TIME and RECURRING jobs"
+}
+ 
+RECURRING JOB:
+
+RECURRING JOB CREATION:
+
+POST http://localhost:8080/api/jobs/create
+
+{
+  "jobName": "Hourly Recurring Job",
+  "jobType": "RECURRING",
+  "startTime": "2026-01-20T19:32:00",
+  "recurrencePattern": "HOURLY",
+  "timeDuration": 5
+}
+
+{
+    "createdAt": "2026-01-20T19:31:53.1736373",
+    "jobId": 5,
+    "jobName": "Hourly Recurring Job",
+    "jobType": "RECURRING",
+    "maxRetries": 3,
+    "nextExecutionTime": "2026-01-20T20:32:00",
+    "recurrencePattern": "HOURLY",
+    "retryCount": 0,
+    "startTime": "2026-01-20T19:32:00",
+    "status": "PENDING",
+    "timeDuration": 5
+}
+
+IF EARLIER START TIME IS GIVEN IN RECURRING JOB CREATION:
+
+POST http://localhost:8080/api/jobs/create
+
+{
+  "jobName": "Hourly Recurring Job",
+  "jobType": "RECURRING",
+  "startTime": "2026-01-20T16:05:00",
+  "recurrencePattern": "HOURLY",
+  "timeDuration": 5
+}
+
+{
+    "error": "Start time must be in the future"
+}
+
+IF ANY FIELD IS MISSING IN RECURRING JOB CREATION:
+
+POST http://localhost:8080/api/jobs/create
+
+{
+  "jobName": "Hourly Recurring Job",
+  "startTime": "2026-01-20T22:05:00",
+  "recurrencePattern": "HOURLY",
+  "timeDuration": 5
+}
+
+{
+    "error": "Job type is required"
+}
+
+DELETE JOB:
+
+DELETE JOB BY ID:
+
+DELETE http://localhost:8080/api/jobs/delete/2
+
+Job deleted successfully
+
+IF JOB TO BE DELETED IS NOT PRESENT:
+
+DELETE http://localhost:8080/api/jobs/delete/2
+
+{
+    "error": "Job with ID 2 not found"
+}
+
+IF EMPLOYEE TRY TO DELETE A JOB:
+
+DELETE http://localhost:8080/api/jobs/delete/2
+
+{
+    "message": "Access denied. Only ADMIN can delete jobs"
+}
+
+RESCHEDULE JOB:
+
+RESCHDULE JOB WHICH IS NOT PRESENT:
+
+PUT http://localhost:8080/api/jobs/reschedule/2
+
+{
+  "startTime": "2026-01-25T10:00:00"
+}
+
+{
+    "error": "Job with ID 2 not found"
+}
+
+RESCHEDULE JOB WHICH IS ALREADY COMPLETED/FAILED:
+
+PUT http://localhost:8080/api/jobs/reschedule/2
+
+{
+  "startTime": "2026-01-25T10:00:00"
+}
+
+{
+    "error": "One-time jobs can be rescheduled only when status is PENDING"
+}
+
+RESCEDULE FOR IMMEDIATE JOB TYPE:
+
+PUT http://localhost:8080/api/jobs/reschedule/7
+
+{
+  "timeDuration": 50
+}
+
+{
+    "error": "Immediate jobs cannot be rescheduled"
+}
+
+RESCHEDULE JOB WHERE START TIME IS EARLIER:
+
+PUT http://localhost:8080/api/jobs/reschedule/6
+
+{
+  "startTime": "2026-01-20T20:00:00"
+}
+
+{
+    "error": "Reschedule start time must be in the future"
+}
+
+RESCHEDULE FOR ONE_TIME JOB TYPE:
+
+PUT http://localhost:8080/api/jobs/reschedule/6
+
+{
+  "startTime": "2026-01-20T20:55:00"
+}
+
+{
+    "createdAt": "2026-01-20T20:51:50.359964",
+    "jobId": 6,
+    "jobName": "One-Time Test Job",
+    "jobType": "ONE_TIME",
+    "maxRetries": 3,
+    "nextExecutionTime": null,
+    "recurrencePattern": null,
+    "retryCount": 0,
+    "startTime": "2026-01-20T20:55:00",
+    "status": "PENDING",
+    "timeDuration": 15
+}
+
+RESCHEDULE FOR RECURRING JOB:
+
+PUT http://localhost:8080/api/jobs/reschedule/3
+
+{
+  "startTime": "2026-01-21T14:29:00"
+}
+
+{
+    "createdAt": "2026-01-21T14:26:50.444325",
+    "jobId": 3,
+    "jobName": "Hourly Recurring Job",
+    "jobType": "RECURRING",
+    "maxRetries": 3,
+    "nextExecutionTime": "2026-01-21T15:29:00",
+    "recurrencePattern": "HOURLY",
+    "retryCount": 0,
+    "startTime": "2026-01-21T14:29:00",
+    "status": "PENDING",
+    "timeDuration": 5
+}
+
+VIEW JOB:
+
+VIEW ALL JOBS:
+
+GET http://localhost:8080/api/jobs/all
+
+[
+    {
+        "createdAt": "2026-01-20T18:50:07.063203",
+        "jobId": 1,
+        "jobName": "Immediate Test Job",
+        "jobType": "IMMEDIATE",
+        "maxRetries": 3,
+        "nextExecutionTime": null,
+        "recurrencePattern": null,
+        "retryCount": 0,
+        "startTime": "2026-01-20T18:50:07.064236",
+        "status": "SUCCESS",
+        "timeDuration": 10
+    },
+    {
+        "createdAt": "2026-01-20T19:10:43.488776",
+        "jobId": 3,
+        "jobName": "One-Time Test Job1",
+        "jobType": "ONE_TIME",
+        "maxRetries": 3,
+        "nextExecutionTime": null,
+        "recurrencePattern": null,
+        "retryCount": 0,
+        "startTime": "2026-01-20T19:11:00",
+        "status": "SUCCESS",
+        "timeDuration": 15
+    },
+    
+]
+
+IF NO JOB IS PRESENT:
+
+GET http://localhost:8080/api/jobs/all
+
+{
+    "error": "No jobs found"
+}
+
+VIEW JOB BY ID:
+
+GET http://localhost:8080/api/jobs/3
+
+{
+    "createdAt": "2026-01-20T19:10:43.488776",
+    "jobId": 3,
+    "jobName": "One-Time Test Job1",
+    "jobType": "ONE_TIME",
+    "maxRetries": 3,
+    "nextExecutionTime": null,
+    "recurrencePattern": null,
+    "retryCount": 0,
+    "startTime": "2026-01-20T19:11:00",
+    "status": "SUCCESS",
+    "timeDuration": 15
+}
+
+IF THE JOB IS NOT PRESENT :
+
+GET http://localhost:8080/api/jobs/2
+
+{
+    "error": "Job with ID 2 not found"
+}
+
+VIEW JOB BY JOB TYPE:
+
+GET http://localhost:8080/api/jobs/type/IMMEDIATE
+
+[
+    {
+        "createdAt": "2026-01-20T18:50:07.063203",
+        "jobId": 1,
+        "jobName": "Immediate Test Job",
+        "jobType": "IMMEDIATE",
+        "maxRetries": 3,
+        "nextExecutionTime": null,
+        "recurrencePattern": null,
+        "retryCount": 0,
+        "startTime": "2026-01-20T18:50:07.064236",
+        "status": "SUCCESS",
+        "timeDuration": 10
+    },
+    {
+        "createdAt": "2026-01-20T19:17:04.691683",
+        "jobId": 4,
+        "jobName": "Immediate Test Job1",
+        "jobType": "IMMEDIATE",
+        "maxRetries": 3,
+        "nextExecutionTime": null,
+        "recurrencePattern": null,
+        "retryCount": 0,
+        "startTime": "2026-01-20T19:17:04.691683",
+        "status": "SUCCESS",
+        "timeDuration": 10
+    }
+]
+
+IF THE JOB WITH CORRESPONDING TYPE IS NOT PRESENT:
+
+http://localhost:8080/api/jobs/type/RECURR
+
+{
+    "error": "No jobs present with job type: RECURR"
+}
+
+VIEW JOB BY STATUS:
+
+GET http://localhost:8080/api/jobs/status/SUCCESS
+
+[
+    {
+        "createdAt": "2026-01-20T18:50:07.063203",
+        "jobId": 1,
+        "jobName": "Immediate Test Job",
+        "jobType": "IMMEDIATE",
+        "maxRetries": 3,
+        "nextExecutionTime": null,
+        "recurrencePattern": null,
+        "retryCount": 0,
+        "startTime": "2026-01-20T18:50:07.064236",
+        "status": "SUCCESS",
+        "timeDuration": 10
+    },
+    {
+        "createdAt": "2026-01-20T19:10:43.488776",
+        "jobId": 3,
+        "jobName": "One-Time Test Job1",
+        "jobType": "ONE_TIME",
+        "maxRetries": 3,
+        "nextExecutionTime": null,
+        "recurrencePattern": null,
+        "retryCount": 0,
+        "startTime": "2026-01-20T19:11:00",
+        "status": "SUCCESS",
+        "timeDuration": 15
+    }
+]
+
+IF THE JOB WITH CORRESPONDING STATUS IS NOT PRESENT:
+
+http://localhost:8080/api/jobs/status/PENDING
+
+{
+    "error": "No jobs present with status: PENDING"
+}
+
+JOB LOGGING:
+
+VIEW ALL JOB LOGS:
+
+GET http://localhost:8080/api/job-logs
+
+[
+    {
+        "endTime": "2026-01-21T14:22:49.280014",
+        "jobId": 1,
+        "jobName": "Immediate Test Job1",
+        "jobStatus": "SUCCESS",
+        "jobType": "IMMEDIATE",
+        "logFilePath": "E:\\shwetha\\chronos-job-schedular\\joblogfile\\job_1_2026-01-21T14-22-39.214697300.log",
+        "logId": 1,
+        "nextExecutionTime": null,
+        "startTime": "2026-01-21T14:22:39.214697"
+    },
+    {
+        "endTime": "2026-01-21T14:25:15.158261",
+        "jobId": 2,
+        "jobName": "One-Time Test Job1",
+        "jobStatus": "SUCCESS",
+        "jobType": "ONE_TIME",
+        "logFilePath": "E:\\shwetha\\chronos-job-schedular\\joblogfile\\job_2_2026-01-21T14-25-00.090034300.log",
+        "logId": 2,
+        "nextExecutionTime": null,
+        "startTime": "2026-01-21T14:25:00.090034"
+    }
+]
+
+IF NO JOB LOG IS PRESENT:
+
+GET http://localhost:8080/api/job-logs
+
+{
+    "error": "No job logs found"
+}
+
+VIEW JOB LOG BY LOG ID:
+
+GET http://localhost:8080/api/job-logs/2
+
+{
+    "endTime": "2026-01-21T14:25:15.158261",
+    "jobId": 2,
+    "jobName": "One-Time Test Job1",
+    "jobStatus": "SUCCESS",
+    "jobType": "ONE_TIME",
+    "logFilePath": "E:\\shwetha\\chronos-job-schedular\\joblogfile\\job_2_2026-01-21T14-25-00.090034300.log",
+    "logId": 2,
+    "nextExecutionTime": null,
+    "startTime": "2026-01-21T14:25:00.090034"
+}
+
+IF THE JOB LOG FOR THE CORRESPONDING LOG ID IS NOT PRESENT:
+
+GET http://localhost:8080/api/job-logs/5
+
+{
+    "error": "Job log with ID 5 not found"
+}
+
+VIEW JOB LOG BY JOB ID:
+
+GET http://localhost:8080/api/job-logs/job/2
+
+[
+    {
+        "endTime": "2026-01-21T14:25:15.158261",
+        "jobId": 2,
+        "jobName": "One-Time Test Job1",
+        "jobStatus": "SUCCESS",
+        "jobType": "ONE_TIME",
+        "logFilePath": "E:\\shwetha\\chronos-job-schedular\\joblogfile\\job_2_2026-01-21T14-25-00.090034300.log",
+        "logId": 2,
+        "nextExecutionTime": null,
+        "startTime": "2026-01-21T14:25:00.090034"
+    }
+]
+
+IF THE JOB LOG FOR THE CORRESPONDING JOB ID IS NOT PRESENT:
+
+GET http://localhost:8080/api/job-logs/job/5
+
+{
+    "error": "No job logs found for jobId: 5"
+}
+
+VIEW JOB LOG BY EXACT START TIME:
+
+GET http://localhost:8080/api/job-logs/start-time?startTime=2026-01-21T14:25:00.090034
+
+[
+    {
+        "endTime": "2026-01-21T14:25:15.158261",
+        "jobId": 2,
+        "jobName": "One-Time Test Job1",
+        "jobStatus": "SUCCESS",
+        "jobType": "ONE_TIME",
+        "logFilePath": "E:\\shwetha\\chronos-job-schedular\\joblogfile\\job_2_2026-01-21T14-25-00.090034300.log",
+        "logId": 2,
+        "nextExecutionTime": null,
+        "startTime": "2026-01-21T14:25:00.090034"
+    }
+]
+
+IF JOB LOG IS NOT PRESENT FOR THE EXACT START TIME
+
+GET http://localhost:8080/api/job-logs/start-time?startTime=2026-01-21T14:35:00
+
+{
+    "error": "No job logs found for startTime: 2026-01-21T14:35"
+}
+
+VIEW JOB LOG BY TIME RANGE:
+
+GET http://localhost:8080/api/job-logs/between?from=2026-01-21T14:00:00&to=2026-01-21T15:00:00
+
+[
+    {
+        "endTime": "2026-01-21T14:22:49.280014",
+        "jobId": 1,
+        "jobName": "Immediate Test Job1",
+        "jobStatus": "SUCCESS",
+        "jobType": "IMMEDIATE",
+        "logFilePath": "E:\\shwetha\\chronos-job-schedular\\joblogfile\\job_1_2026-01-21T14-22-39.214697300.log",
+        "logId": 1,
+        "nextExecutionTime": null,
+        "startTime": "2026-01-21T14:22:39.214697"
+    },
+    {
+        "endTime": "2026-01-21T14:25:15.158261",
+        "jobId": 2,
+        "jobName": "One-Time Test Job1",
+        "jobStatus": "SUCCESS",
+        "jobType": "ONE_TIME",
+        "logFilePath": "E:\\shwetha\\chronos-job-schedular\\joblogfile\\job_2_2026-01-21T14-25-00.090034300.log",
+        "logId": 2,
+        "nextExecutionTime": null,
+        "startTime": "2026-01-21T14:25:00.090034"
+    }
+]
+
+VIEW JOB LOG BY TIME RANGE (IF START TIME IS LATER THAN END TIME):
+
+GET http://localhost:8080/api/job-logs/between?from=2026-01-21T16:00:00&to=2026-01-21T15:00:00
+
+{
+    "error": "From time must be before To time"
+}
+
+IF NO JOB LOG IS PRESENT FOR THE TIME RANGE:
+
+GET http://localhost:8080/api/job-logs/between?from=2026-01-21T15:00:00&to=2026-01-21T15:30:00
+
+{
+    "error": "No job logs found between 2026-01-21T15:00 and 2026-01-21T15:30"
+}
+
+MONITORING:
+
+SYSTEM LEVEL MONITORING:
+
+GET http://localhost:8080/api/monitoring/system
+
+{
+    "schedulerRunning": true,
+    "systemStatus": "UP"
+}
+
+JOB LEVEL MONITORING:
+
+GET http://localhost:8080/api/monitoring/jobs
+
+{
+    "totalJobs": 36,
+    "pending": 7,
+    "running": 0,
+    "success": 20,
+    "failed": 9,
+    "immediateJobs": 11,
+    "oneTimeJobs": 14,
+    "recurringJobs": 11
+}
+
+
