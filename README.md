@@ -47,6 +47,8 @@ ________________________________________
 
    Programming Language -Java
 
+   API Testing          -Postman
+
    Architecture	      -Layered Architecture
 ________________________________________
 4. System Architecture
